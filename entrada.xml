@@ -1,13 +1,13 @@
-<?xml version="1.0"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <datosMarte> 
     <listaOrganismos> 
         <organismo> 
-            <codigo>Organismo1</codigo> 
-            <nombre>123-ABD</nombre> 
+            <codigo>123-ABD</codigo> 
+            <nombre>Organismo1</nombre> 
         </organismo> 
         <organismo> 
-            <codigo>Organismo2</codigo> 
-            <nombre>456-HJK</nombre> 
+            <codigo>456-HJK</codigo> 
+            <nombre>Organismo2</nombre> 
         </organismo> 
     </listaOrganismos> 
     <listadoMuestras> 
@@ -20,17 +20,17 @@
                     <celdaViva>
                         <fila>9</fila> 
                         <columna>5</columna> 
-                        <codigoOrganismo>123-ABC<codigoOrganismo> 
+                        <codigoOrganismo>123-ABC</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>6</fila> 
                         <columna>2</columna> 
-                        <codigoOrganismo>123-ABC<codigoOrganismo> 
+                        <codigoOrganismo>123-ABC</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>1</fila> 
                         <columna>1</columna> 
-                        <codigoOrganismo>456-HJK<codigoOrganismo> 
+                        <codigoOrganismo>456-HJK</codigoOrganismo> 
                     </celdaViva>
                 </listadoCeldasVivas> 
         </muestra>
@@ -43,22 +43,22 @@
                     <celdaViva>
                         <fila>15</fila> 
                         <columna>2</columna> 
-                        <codigoOrganismo>123-ABC<codigoOrganismo> 
+                        <codigoOrganismo>123-ABC</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>2</fila> 
                         <columna>18</columna> 
-                        <codigoOrganismo>456-HJK<codigoOrganismo> 
+                        <codigoOrganismo>456-HJK</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>1</fila> 
                         <columna>1</columna> 
-                        <codigoOrganismo>456-HJK<codigoOrganismo> 
+                        <codigoOrganismo>456-HJK</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>20</fila> 
                         <columna>20</columna> 
-                        <codigoOrganismo>456-HJK<codigoOrganismo> 
+                        <codigoOrganismo>456-HJK</codigoOrganismo> 
                     </celdaViva>
                 </listadoCeldasVivas> 
         </muestra>

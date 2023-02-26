@@ -1,16 +1,26 @@
 import xml.etree.ElementTree as ET
 from colorama import Fore
 from tkinter import filedialog
+from ListaSimple import ListaSimpleEnlazada
+from ListaDoble import ListaDoble
+from NodoDoble import  NodoD
+from NodoSimple import  NodoS
+#from NodoSimple import  NodoS22
+#from NodoSimple2 import  NodoS2
 
+listaOrganismos=ListaSimpleEnlazada()
+contagiados=ListaDoble()
 menu=0
 filename1=""
 
+#INICIO DEL PROGRAMA
+def Inicio(listaO,menu,filename1):
 
-def Inicio(menu,filename1):
-    
-    
-    menu =menu
-    
+    listaOrganismos=ListaSimpleEnlazada()
+    listaOrganismos=listaO
+    rejilla=ListaDoble()
+    menu = menu
+    celdasContagiadas=ListaDoble()
     
     if menu==0:
     
@@ -18,15 +28,100 @@ def Inicio(menu,filename1):
         print(Fore.BLUE + "Elija su Archivo XML")
         
         
-        
         filename1 = filedialog.askopenfilename(initialdir = "/", title = "Seleccione un Archivo XML", filetypes = (("XML files", "*.xml*"), ("All files", "*.*")))
         print(Fore.BLUE + filename1)
-        listaMuestras = cargarArchivo(filename1)
-        
+        listaOrganismos = cargarArchivo(filename1)
+            
+    
+    if menu==1:
+        listaOrganismos.print()
+        print(Fore.RED +  "--------------ORGANISMOS---------------")
+        listaOrganismos.NombreOrganismos() #CAMBIAR ESTO EN LA LISTA NombrePacientes por NombreOrganismos
+        organismo = input(Fore.YELLOW + "Ingrese código del Organismo\n")
+        if listaOrganismos.buscarOrganismos(organismo): #CAMBIAR ESTO EN LA LISTA buscarOrganismo
+            celdasVivas = cargarVivas(filename1,organismo)
+            print(Fore.RED +  "--------------OPCIONES---------------")
+            print(Fore.RED+  "1. Ver Rejilla inicial")
+            print(Fore.RED+ "2. Generar Periodos")
+            opc = input(Fore.YELLOW + "Seleccione una opción\n")
+            if opc=='1' :
+                print(Fore.BLUE+"-----------------------------------------------------------------------")
+                rejilla=generarRejilla(celdasVivas, listaOrganismos,organismo) #cambiar celdasInfectadas por celdasVivas
+                print("-----------------------------------------------------------------------")
+            elif  opc=='2':
+                print("---2---")
+            else:
+                print(Fore.RED +  "No es una opción correcta")
+        else: 
+            print(Fore.RED +  "El código ingresado no corresponde a ningún organismo registrado")
+
+
+
+
+#CARGA DE ARCHIVO
 def cargarArchivo(filename1):
+    
     tree = ET.parse(filename1)
-    muestras = tree.getroot()
+    organismos = tree.getroot()
+    organismosLista = ListaSimpleEnlazada()
+    for organismo in organismos:
+        for datoP in organismo.iter('organismo'):
+            nuevoOrganismo = NodoS(datoP.find('codigo').text, datoP.find('nombre').text)
+            organismosLista.agregar(nuevoOrganismo)
+        
+    print(Fore.GREEN +  "Organismo agregado con éxito")
+    Inicio(organismosLista,1,filename1)
+
+
+
+#GENERAR REJILLA
+def generarRejilla(contagiados,listaO, nombre):
     
+    sanas =0
+    infectadas=0
+    rejilla=ListaDoble()
+    celdasVivas=ListaDoble()
+    celdasVivas=contagiados
+    listaOrganismos=ListaSimpleEnlazada()
+    listaOrganismos=listaO 
+    m=int(listaOrganismos.m(nombre))
+    n=int(listaOrganismos.m(nombre))
+    for x in range(1, m+1):
+        for y in range(1, n+1):
+            if celdasVivas.Existe(x,y)== 0:
+                nuevaCelda=NodoD(nombre,x,y,0)
+                rejilla.agregar(nuevaCelda)
+                sanas=sanas+1
+            elif celdasVivas.Existe(x,y)==1:
+                nuevaCelda=NodoD(nombre,x,y,1)
+                rejilla.agregar(nuevaCelda)
+                infectadas=infectadas+1
+            else:
+                print("algo falló con celdas infectadas :/")
+    rejilla.print()
+    print("Células sanas: "+ str(sanas)+". Infectadas: "+str(infectadas)+". Total: "+str(sanas+infectadas))
+    rejilla.graficar()
+    return rejilla
+
+
+
+#CARGA DE CELDAS INFECTADAS
+
+def cargarVivas(filename,nombreB):
+    tree = ET.parse(filename)
+    organismos = tree.getroot()
+    celdasVivas =ListaDoble()
     contador =0
-    
-Inicio(menu,filename1)
+    for organismo in organismos:
+        contador=contador+1
+        for datoP in organismo.iter('datospersonales'):
+            nombre=datoP.find('nombre').text
+        for rejilla in organismo.iter('celda'):
+            if nombre==nombreB:
+                nuevoVivo=NodoD(nombre,rejilla.attrib['f'], rejilla.attrib['c'] ,1)
+                celdasVivas.agregar(nuevoVivo)
+    #celdasVivas.print()
+    return celdasVivas
+
+
+Inicio(listaOrganismos,menu,filename1)
