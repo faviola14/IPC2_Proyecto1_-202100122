@@ -114,11 +114,11 @@ def cargarVivas(filename,nombreB):
     contador =0
     for organismo in organismos:
         contador=contador+1
-        for datoP in organismo.iter('datospersonales'):
-            nombre=datoP.find('nombre').text
-        for rejilla in organismo.iter('celda'):
+        for datoP in organismo.iter('muestra'):
+            nombre=datoP.find('codigo').text
+        for rejilla in organismo.iter('muestra'):
             if nombre==nombreB:
-                nuevoVivo=NodoD(nombre,rejilla.attrib['f'], rejilla.attrib['c'] ,1)
+                nuevoVivo=NodoD(nombre,rejilla.attrib['fila'], rejilla.attrib['columna'] ,1)
                 celdasVivas.agregar(nuevoVivo)
     #celdasVivas.print()
     return celdasVivas
