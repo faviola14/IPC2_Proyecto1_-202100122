@@ -7,7 +7,7 @@ class ListaSimpleEnlazada2:
         self.ultimo = NodoS2()
 
     def agregar(self, dato):
-        if self.primero.dato1 is None:
+        if self.primero.codigoOrganismo is None:
             self.primero = dato
             self.ultimo = dato
         elif self.primero.siguiente is None:
@@ -22,8 +22,8 @@ class ListaSimpleEnlazada2:
         nodoAux = self.primero
         cadena = ''
         while True:
-            if nodoAux.dato1 is not None:
-                cadena += "(" + nodoAux.dato1 + " " + nodoAux.dato2 + ")"
+            if nodoAux.codigoOrganismo is not None:
+                cadena += "(" + nodoAux.fila + " " + nodoAux.columna +" " + nodoAux.codigoOrganismo + ")"
 
                 if nodoAux.siguiente is not None:
                     nodoAux = nodoAux.siguiente
@@ -33,4 +33,14 @@ class ListaSimpleEnlazada2:
             else:
                 break
         
+        print(cadena)
+
+    def fila(self):
+        nodoAux = self.primero
+        cadena = ''
+        while True:
+            if nodoAux.fila is not None:
+                return nodoAux.fila
+            else:
+                break
         print(cadena)

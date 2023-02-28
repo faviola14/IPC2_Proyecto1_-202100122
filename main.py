@@ -2,22 +2,27 @@ import xml.etree.ElementTree as ET
 from colorama import Fore
 from tkinter import filedialog
 from ListaSimple import ListaSimpleEnlazada
+from ListaSimple2 import ListaSimpleEnlazada2
+from ListaSimple import ListaSimpleEnlazada22
 from ListaDoble import ListaDoble
 from NodoDoble import  NodoD
 from NodoSimple import  NodoS
-#from NodoSimple import  NodoS22
-#from NodoSimple2 import  NodoS2
+from NodoSimple import  NodoS22
+from NodoSimple2 import  NodoS2
 
 listaOrganismos=ListaSimpleEnlazada()
+listaMuestras=ListaSimpleEnlazada22()
 contagiados=ListaDoble()
 menu=0
 filename1=""
 
 #INICIO DEL PROGRAMA
-def Inicio(listaO,menu,filename1):
+def Inicio(listaO,listaM,menu,filename1):
 
     listaOrganismos=ListaSimpleEnlazada()
     listaOrganismos=listaO
+    listaMuestras=ListaSimpleEnlazada22()
+    listaMuestras=listaM
     rejilla=ListaDoble()
     menu = menu
     celdasContagiadas=ListaDoble()
@@ -35,18 +40,19 @@ def Inicio(listaO,menu,filename1):
     
     if menu==1:
         listaOrganismos.print()
+        listaMuestras.print()
         print(Fore.RED +  "--------------ORGANISMOS---------------")
-        listaOrganismos.NombreOrganismos() #CAMBIAR ESTO EN LA LISTA NombrePacientes por NombreOrganismos
-        organismo = input(Fore.YELLOW + "Ingrese código del Organismo\n")
-        if listaOrganismos.buscarOrganismos(organismo): #CAMBIAR ESTO EN LA LISTA buscarOrganismo
-            celdasVivas = cargarVivas(filename1,organismo)
+        listaMuestras.CodigoMuestra() 
+        muestra = input(Fore.YELLOW + "Ingrese código de la Muestra que desea Analizar\n")
+        if listaMuestras.buscarMuestra(muestra): 
+            celdasVivas = cargarVivas(filename1,muestra)
             print(Fore.RED +  "--------------OPCIONES---------------")
-            print(Fore.RED+  "1. Ver Rejilla inicial")
-            print(Fore.RED+ "2. Generar Periodos")
+            print(Fore.RED+  "1. Ver Muestra inicial")
+            print(Fore.RED+ "2. Generar Simulación")
             opc = input(Fore.YELLOW + "Seleccione una opción\n")
             if opc=='1' :
                 print(Fore.BLUE+"-----------------------------------------------------------------------")
-                rejilla=generarRejilla(celdasVivas, listaOrganismos,organismo) #cambiar celdasInfectadas por celdasVivas
+                rejilla=generarRejilla(celdasVivas, listaOrganismos,muestra) #cambiar celdasInfectadas por celdasVivas
                 print("-----------------------------------------------------------------------")
             elif  opc=='2':
                 print("---2---")
@@ -64,17 +70,30 @@ def cargarArchivo(filename1):
     tree = ET.parse(filename1)
     organismos = tree.getroot()
     organismosLista = ListaSimpleEnlazada()
+    muestras=ListaSimpleEnlazada22()
+    contador=0
     for organismo in organismos:
+        contador=contador+1
         for datoP in organismo.iter('organismo'):
-            nuevoOrganismo = NodoS(datoP.find('codigo').text, datoP.find('nombre').text)
+            nuevoOrganismo = NodoS(str(contador),datoP.find('codigo').text, datoP.find('nombre').text)
             organismosLista.agregar(nuevoOrganismo)
+            
+    for organismo in organismos:
         
-    print(Fore.GREEN +  "Organismo agregado con éxito")
-    Inicio(organismosLista,1,filename1)
+        for datoP1 in organismo.iter('muestra'):
+            codigo=datoP1.find('codigo').text
+            descripcion=datoP1.find('descripcion').text
+            filas=datoP1.find('filas').text
+            columnas=datoP1.find('columnas').text
+            nuevaMuestra=NodoS22(codigo,descripcion,filas,columnas)
+            muestras.agregar(nuevaMuestra)
+            
+    print(Fore.GREEN +  "Organismo agregado con éxito, Muestras Agregadas con éxito")
+    Inicio(organismosLista,muestras,1,filename1)
 
 
 
-#GENERAR REJILLA
+#GENERAR Muestra
 def generarRejilla(contagiados,listaO, nombre):
     
     sanas =0
@@ -98,6 +117,7 @@ def generarRejilla(contagiados,listaO, nombre):
                 infectadas=infectadas+1
             else:
                 print("algo falló con celdas infectadas :/")
+                
     rejilla.print()
     print("Células sanas: "+ str(sanas)+". Infectadas: "+str(infectadas)+". Total: "+str(sanas+infectadas))
     rejilla.graficar()
@@ -105,23 +125,29 @@ def generarRejilla(contagiados,listaO, nombre):
 
 
 
-#CARGA DE CELDAS INFECTADAS
+#CARGA DE Bacterias Vivas
 
 def cargarVivas(filename,nombreB):
     tree = ET.parse(filename)
     organismos = tree.getroot()
-    celdasVivas =ListaDoble()
-    contador =0
+    celdasVivas =ListaSimpleEnlazada2()
+    muestras=ListaSimpleEnlazada22()
+    
     for organismo in organismos:
-        contador=contador+1
         for datoP in organismo.iter('muestra'):
-            nombre=datoP.find('codigo').text
-        for rejilla in organismo.iter('muestra'):
-            if nombre==nombreB:
-                nuevoVivo=NodoD(nombre,rejilla.attrib['fila'], rejilla.attrib['columna'] ,1)
-                celdasVivas.agregar(nuevoVivo)
+            codigo=datoP.find('codigo').text
+            if codigo==nombreB:
+                
+                for rejilla1 in organismo.iter('listadoCeldasVivas'):
+                    for rejilla in organismo.iter('celdaViva'):
+                        fila=rejilla.find('fila').text
+                        columna=rejilla.find('columna').text
+                        codigoOrganismo=rejilla.find('codigoOrganismo').text
+                        
+                        nuevoVivo=NodoS2(fila,columna,codigoOrganismo)
+                        celdasVivas.agregar(nuevoVivo)
     #celdasVivas.print()
     return celdasVivas
 
 
-Inicio(listaOrganismos,menu,filename1)
+Inicio(listaOrganismos,listaMuestras,menu,filename1)

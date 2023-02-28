@@ -1,13 +1,15 @@
 
 class NodoS:
-    def __init__(self, codigo = None, nombre = None) -> None:
+    def __init__(self, codigo = None, nombre = None, numero=None) -> None:
         self.codigo = codigo
         self.nombre = nombre
+        self.numero = numero
         self.siguiente = None
 
 class NodoS22:
-    def __init__(self,paciente = None, dato1 = None, dato2 = None) -> None:
-        self.dato1 = dato1
-        self.dato2 = dato2
-        self.paciente = paciente
+    def __init__(self,codigo = None, descripcion = None, filas = None, columnas = None) -> None:
+        self.codigo= codigo
+        self.descripcion = descripcion
+        self.filas = filas
+        self.columnas = columnas
         self.siguiente = None
