@@ -46,6 +46,7 @@ def Inicio(listaO,listaM,menu,filename1):
         muestra = input(Fore.YELLOW + "Ingrese código de la Muestra que desea Analizar\n")
         if listaMuestras.buscarMuestra(muestra): 
             celdasVivas = cargarVivas(filename1,muestra)
+            celdasVivas.print()
             print(Fore.RED +  "--------------OPCIONES---------------")
             print(Fore.RED+  "1. Ver Muestra inicial")
             print(Fore.RED+ "2. Generar Simulación")

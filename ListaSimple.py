@@ -61,7 +61,7 @@ class ListaSimpleEnlazada:
 
         nodoAux = self.primero
         contador=0
-        while nodoAux.datos.primero.codigo != codigo:
+        while nodoAux.codigo != codigo:
             contador=contador+1
             if nodoAux.siguiente is not None:
                 
@@ -74,7 +74,7 @@ class ListaSimpleEnlazada:
     def m(self,codigo):
         nodoAux = self.primero
         contador=0
-        while nodoAux.datos.primero.codigo != codigo:
+        while nodoAux.codigo != codigo:
             contador=contador+1
             if nodoAux.siguiente is not None:
                 
@@ -146,7 +146,7 @@ class ListaSimpleEnlazada22:
 
         nodoAux = self.primero
         contador=0
-        while nodoAux.datos.primero.codigo != codigo:
+        while nodoAux.codigo != codigo:
             contador=contador+1
             if nodoAux.siguiente is not None:
                 
