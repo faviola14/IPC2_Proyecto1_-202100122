@@ -26,7 +26,7 @@ class ListaSimpleEnlazada:
         cadena = ''
         while True:
             if nodoAux.codigo is not None:
-                cadena += "(" + nodoAux.numero + " "+ nodoAux.codigo + " " + nodoAux.nombre + ")"
+                cadena += "("  + " "+ nodoAux.codigo + " " + nodoAux.nombre + " " + nodoAux.color+"v"+")"
 
                 if nodoAux.siguiente is not None:
                     nodoAux = nodoAux.siguiente

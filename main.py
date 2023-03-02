@@ -42,23 +42,28 @@ def Inicio(listaO,listaM,menu,filename1):
         listaOrganismos.print()
         listaMuestras.print()
         print(Fore.RED +  "--------------ORGANISMOS---------------")
-        listaMuestras.CodigoMuestra() 
-        muestra = input(Fore.YELLOW + "Ingrese código de la Muestra que desea Analizar\n")
-        if listaMuestras.buscarMuestra(muestra): 
-            celdasVivas = cargarVivas(filename1,muestra)
-            celdasVivas.print()
-            print(Fore.RED +  "--------------OPCIONES---------------")
-            print(Fore.RED+  "1. Ver Muestra inicial")
-            print(Fore.RED+ "2. Generar Simulación")
-            opc = input(Fore.YELLOW + "Seleccione una opción\n")
-            if opc=='1' :
-                print(Fore.BLUE+"-----------------------------------------------------------------------")
-                rejilla=generarRejilla(celdasVivas, listaOrganismos,muestra) #cambiar celdasInfectadas por celdasVivas
-                print("-----------------------------------------------------------------------")
-            elif  opc=='2':
-                print("---2---")
+        listaOrganismos.NombreOrganismos()
+        organismo = input(Fore.YELLOW + "Ingrese código del Organismo que desea Analizar\n")
+        if listaOrganismos.buscarOrganismo(organismo): 
+            listaMuestras.CodigoMuestra()
+            muestra = input(Fore.YELLOW + "Ingrese código de la Muestra que desea Analizar\n")
+            if listaMuestras.buscarMuestra(muestra):
+                celdasVivas = cargarVivas(filename1,organismo,muestra)
+                celdasVivas.print()
+                print(Fore.RED +  "--------------OPCIONES---------------")
+                print(Fore.RED+  "1. Ver Rejilla inicial")
+                print(Fore.RED+ "2. Generar Simulación")
+                opc = input(Fore.YELLOW + "Seleccione una opción\n")
+                if opc=='1' :
+                    print(Fore.BLUE+"-----------------------------------------------------------------------")
+                    rejilla=generarRejilla(celdasVivas, listaOrganismos,organismo) 
+                    print("-----------------------------------------------------------------------")
+                elif  opc=='2':
+                    print("---2---")
+                else:
+                    print(Fore.RED +  "No es una opción correcta")
             else:
-                print(Fore.RED +  "No es una opción correcta")
+                print(Fore.RED +  "El código ingresado no corresponde a ninguna muestra registrada")
         else: 
             print(Fore.RED +  "El código ingresado no corresponde a ningún organismo registrado")
 
@@ -76,7 +81,7 @@ def cargarArchivo(filename1):
     for organismo in organismos:
         contador=contador+1
         for datoP in organismo.iter('organismo'):
-            nuevoOrganismo = NodoS(str(contador),datoP.find('codigo').text, datoP.find('nombre').text)
+            nuevoOrganismo = NodoS(datoP.find('codigo').text, datoP.find('nombre').text,datoP.find('color').text)
             organismosLista.agregar(nuevoOrganismo)
             
     for organismo in organismos:
@@ -128,24 +133,24 @@ def generarRejilla(contagiados,listaO, nombre):
 
 #CARGA DE Bacterias Vivas
 
-def cargarVivas(filename,nombreB):
+def cargarVivas(filename,nombreO, nombreM):
     tree = ET.parse(filename)
     organismos = tree.getroot()
     celdasVivas =ListaSimpleEnlazada2()
-    muestras=ListaSimpleEnlazada22()
+    
     
     for organismo in organismos:
         for datoP in organismo.iter('muestra'):
             codigo=datoP.find('codigo').text
-            if codigo==nombreB:
-                
-                for rejilla1 in organismo.iter('listadoCeldasVivas'):
-                    for rejilla in organismo.iter('celdaViva'):
+            for rejilla1 in datoP.iter('listadoCeldasVivas'):
+                for rejilla in rejilla1.iter('celdaViva'):
+                    codigoOrganismo=rejilla.find('codigoOrganismo').text
+                    print(codigoOrganismo)
+                    if str(codigoOrganismo)==str(nombreO) and str(codigo) == str(nombreM):
                         fila=rejilla.find('fila').text
                         columna=rejilla.find('columna').text
-                        codigoOrganismo=rejilla.find('codigoOrganismo').text
                         
-                        nuevoVivo=NodoS2(fila,columna,codigoOrganismo)
+                        nuevoVivo=NodoS2(fila,columna,codigoOrganismo,codigo)
                         celdasVivas.agregar(nuevoVivo)
     #celdasVivas.print()
     return celdasVivas

@@ -1,9 +1,10 @@
 
 class NodoS:
-    def __init__(self, codigo = None, nombre = None, numero=None) -> None:
+    def __init__(self, codigo = None, nombre = None, color=None) -> None:
         self.codigo = codigo
         self.nombre = nombre
-        self.numero = numero
+        self.color = color
+        
         self.siguiente = None
 
 class NodoS22:
