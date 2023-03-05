@@ -2,13 +2,23 @@
 <datosMarte> 
     <listaOrganismos> 
         <organismo> 
-            <codigo>123-ABC</codigo> 
-            <nombre>Organismo1</nombre> 
+            <codigo>A</codigo> 
+            <nombre>OrganismoA</nombre> 
             <color>#FFC300</color>
         </organismo> 
         <organismo> 
-            <codigo>456-HJK</codigo> 
-            <nombre>Organismo2</nombre> 
+            <codigo>B</codigo> 
+            <nombre>OrganismoB</nombre> 
+            <color>#DAF7A6</color>
+        </organismo> 
+        <organismo> 
+            <codigo>C</codigo> 
+            <nombre>OrganismoC</nombre> 
+            <color>#FF5733</color>
+        </organismo> 
+        <organismo> 
+            <codigo>D</codigo> 
+            <nombre>OrganismoD</nombre> 
             <color>#C70039</color>
         </organismo> 
     </listaOrganismos> 
@@ -16,23 +26,73 @@
         <muestra> 
             <codigo>muestra1</codigo> 
             <descripcion>muestra1desc</descripcion> 
-            <filas>10</filas> 
-            <columnas>10</columnas> 
+            <filas>18</filas> 
+            <columnas>18</columnas> 
                 <listadoCeldasVivas> 
                     <celdaViva>
-                        <fila>9</fila> 
+                        <fila>4</fila> 
+                        <columna>4</columna> 
+                        <codigoOrganismo>A</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>4</fila> 
                         <columna>5</columna> 
-                        <codigoOrganismo>123-ABC</codigoOrganismo> 
+                        <codigoOrganismo>B</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>5</fila> 
+                        <columna>4</columna> 
+                        <codigoOrganismo>B</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>5</fila> 
+                        <columna>5</columna> 
+                        <codigoOrganismo>B</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>6</fila> 
-                        <columna>2</columna> 
-                        <codigoOrganismo>123-ABC</codigoOrganismo> 
+                        <columna>3</columna> 
+                        <codigoOrganismo>B</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
-                        <fila>1</fila> 
-                        <columna>1</columna> 
-                        <codigoOrganismo>456-HJK</codigoOrganismo> 
+                        <fila>6</fila> 
+                        <columna>4</columna> 
+                        <codigoOrganismo>B</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>6</fila> 
+                        <columna>5</columna> 
+                        <codigoOrganismo>B</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>7</fila> 
+                        <columna>8</columna> 
+                        <codigoOrganismo>D</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>7</fila> 
+                        <columna>9</columna> 
+                        <codigoOrganismo>C</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>8</fila> 
+                        <columna>8</columna> 
+                        <codigoOrganismo>C</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>8</fila> 
+                        <columna>9</columna> 
+                        <codigoOrganismo>D</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>9</fila> 
+                        <columna>9</columna> 
+                        <codigoOrganismo>C</codigoOrganismo> 
+                    </celdaViva>
+                    <celdaViva>
+                        <fila>9</fila> 
+                        <columna>10</columna> 
+                        <codigoOrganismo>D</codigoOrganismo> 
                     </celdaViva>
                 </listadoCeldasVivas> 
         </muestra>
@@ -45,22 +105,22 @@
                     <celdaViva>
                         <fila>15</fila> 
                         <columna>2</columna> 
-                        <codigoOrganismo>123-ABC</codigoOrganismo> 
+                        <codigoOrganismo>A</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>2</fila> 
                         <columna>18</columna> 
-                        <codigoOrganismo>456-HJK</codigoOrganismo> 
+                        <codigoOrganismo>A</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>1</fila> 
                         <columna>1</columna> 
-                        <codigoOrganismo>456-HJK</codigoOrganismo> 
+                        <codigoOrganismo>A</codigoOrganismo> 
                     </celdaViva>
                     <celdaViva>
                         <fila>20</fila> 
                         <columna>20</columna> 
-                        <codigoOrganismo>456-HJK</codigoOrganismo> 
+                        <codigoOrganismo>B</codigoOrganismo> 
                     </celdaViva>
                 </listadoCeldasVivas> 
         </muestra>

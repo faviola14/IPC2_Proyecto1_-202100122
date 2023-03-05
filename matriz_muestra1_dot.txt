@@ -1,0 +1,20 @@
+digraph T{ 
+node[shape=box fontname="Arial" fillcolor="white" style=filled ]
+root[label = "capa: 0", group=1]
+label = "MATRIZ DISPERSA" 
+fontname="Arial Black" 
+fontsize="15pt" 
+
+                    
+F4[label="F4",fillcolor="plum",group=1];
+C4[label="C4",fillcolor="powderblue",group=5];
+root->F4;
+ root->C4;
+{rank=same;root;C4;}
+N4_4[label="A",group="5", fillcolor="#FFC300"];
+F4->N4_4;
+N4_4->F4;
+{rank = same;F4;N4_4;}
+C4->N4_4;
+N4_4->C4;
+}

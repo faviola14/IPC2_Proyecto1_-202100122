@@ -71,7 +71,7 @@ class ListaSimpleEnlazada:
         
         return True
 
-    def m(self,codigo):
+    def color(self,codigo):
         nodoAux = self.primero
         contador=0
         while nodoAux.codigo != codigo:
@@ -82,7 +82,7 @@ class ListaSimpleEnlazada:
             else:
                 return None
         
-        return nodoAux.nombre
+        return nodoAux.color
 
 
 

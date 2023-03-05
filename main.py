@@ -9,6 +9,11 @@ from NodoDoble import  NodoD
 from NodoSimple import  NodoS
 from NodoSimple import  NodoS22
 from NodoSimple2 import  NodoS2
+from NodoEncabezado import NodoEncabezado
+from ListaEncabezado import ListaEncabezado
+from NodoCeldas import NodoCeldas
+from MatrizDispersa import MatrizDispersa
+
 
 listaOrganismos=ListaSimpleEnlazada()
 listaMuestras=ListaSimpleEnlazada22()
@@ -48,7 +53,7 @@ def Inicio(listaO,listaM,menu,filename1):
             listaMuestras.CodigoMuestra()
             muestra = input(Fore.YELLOW + "Ingrese código de la Muestra que desea Analizar\n")
             if listaMuestras.buscarMuestra(muestra):
-                celdasVivas = cargarVivas(filename1,organismo,muestra)
+                celdasVivas = cargarVivas(filename1,organismo,muestra,listaOrganismos)
                 celdasVivas.print()
                 print(Fore.RED +  "--------------OPCIONES---------------")
                 print(Fore.RED+  "1. Ver Rejilla inicial")
@@ -109,8 +114,10 @@ def generarRejilla(contagiados,listaO, nombre):
     celdasVivas=contagiados
     listaOrganismos=ListaSimpleEnlazada()
     listaOrganismos=listaO 
+    
     m=int(listaOrganismos.m(nombre))
     n=int(listaOrganismos.m(nombre))
+    
     for x in range(1, m+1):
         for y in range(1, n+1):
             if celdasVivas.Existe(x,y)== 0:
@@ -133,11 +140,12 @@ def generarRejilla(contagiados,listaO, nombre):
 
 #CARGA DE Bacterias Vivas
 
-def cargarVivas(filename,nombreO, nombreM):
+def cargarVivas(filename,nombreO, nombreM,listaOrganismos):
+    
     tree = ET.parse(filename)
     organismos = tree.getroot()
     celdasVivas =ListaSimpleEnlazada2()
-    
+    matriz = MatrizDispersa()
     
     for organismo in organismos:
         for datoP in organismo.iter('muestra'):
@@ -145,13 +153,20 @@ def cargarVivas(filename,nombreO, nombreM):
             for rejilla1 in datoP.iter('listadoCeldasVivas'):
                 for rejilla in rejilla1.iter('celdaViva'):
                     codigoOrganismo=rejilla.find('codigoOrganismo').text
-                    print(codigoOrganismo)
-                    if str(codigoOrganismo)==str(nombreO) and str(codigo) == str(nombreM):
-                        fila=rejilla.find('fila').text
-                        columna=rejilla.find('columna').text
+                    
+                    #if str(codigoOrganismo)==str(nombreO) and str(codigo) == str(nombreM):
+                    fila=rejilla.find('fila').text
+                    columna=rejilla.find('columna').text
                         
-                        nuevoVivo=NodoS2(fila,columna,codigoOrganismo,codigo)
-                        celdasVivas.agregar(nuevoVivo)
+                    nuevoVivo=NodoS2(fila,columna,codigoOrganismo,codigo)
+                    celdasVivas.agregar(nuevoVivo)
+                    color=listaOrganismos.color(str(codigoOrganismo))
+                    print(codigoOrganismo)
+                    print(color)
+
+                    n1 = NodoCeldas(rejilla.find('fila').text,rejilla.find('columna').text,color,codigoOrganismo)
+                    matriz.insertar(n1)
+                    matriz.graficarDot("Inicial",codigo)
     #celdasVivas.print()
     return celdasVivas
 

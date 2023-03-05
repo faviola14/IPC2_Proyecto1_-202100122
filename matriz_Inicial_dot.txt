@@ -1,0 +1,107 @@
+digraph T{ 
+node[shape=box fontname="Arial" fillcolor="white" style=filled ]
+root[label = "capa: 0", group=1]
+label = "muestra1" 
+fontname="Arial Black" 
+fontsize="15pt" 
+
+                    
+F4[label="F4",fillcolor="plum",group=1];
+F5[label="F5",fillcolor="plum",group=1];
+F6[label="F6",fillcolor="plum",group=1];
+F7[label="F7",fillcolor="plum",group=1];
+F8[label="F8",fillcolor="plum",group=1];
+F9[label="F9",fillcolor="plum",group=1];
+F4->F5;
+F5->F4;
+F5->F6;
+F6->F5;
+F6->F7;
+F7->F6;
+F7->F8;
+F8->F7;
+F8->F9;
+F9->F8;
+C3[label="C3",fillcolor="powderblue",group=4];
+C4[label="C4",fillcolor="powderblue",group=5];
+C5[label="C5",fillcolor="powderblue",group=6];
+C8[label="C8",fillcolor="powderblue",group=9];
+C9[label="C9",fillcolor="powderblue",group=10];
+C3->C4
+C4->C3
+C4->C5
+C5->C4
+C5->C8
+C8->C5
+C8->C9
+C9->C8
+root->F4;
+ root->C3;
+{rank=same;root;C3;C4;C5;C8;C9;}
+N4_4[label="A",group="5", fillcolor="#FFC300"];
+N4_5[label="B",group="6", fillcolor="#DAF7A6"];
+N5_4[label="B",group="5", fillcolor="#DAF7A6"];
+N5_5[label="B",group="6", fillcolor="#DAF7A6"];
+N6_3[label="B",group="4", fillcolor="#DAF7A6"];
+N6_4[label="B",group="5", fillcolor="#DAF7A6"];
+N6_5[label="B",group="6", fillcolor="#DAF7A6"];
+N7_8[label="D",group="9", fillcolor="#C70039"];
+N7_9[label="C",group="10", fillcolor="#FF5733"];
+N8_8[label="C",group="9", fillcolor="#FF5733"];
+N8_9[label="D",group="10", fillcolor="#C70039"];
+N9_9[label="C",group="10", fillcolor="#FF5733"];
+F4->N4_4;
+N4_4->F4;
+N4_4->N4_5;
+N4_5->N4_4;
+{rank = same;F4;N4_4;N4_5;}
+F5->N5_4;
+N5_4->F5;
+N5_4->N5_5;
+N5_5->N5_4;
+{rank = same;F5;N5_4;N5_5;}
+F6->N6_3;
+N6_3->F6;
+N6_3->N6_4;
+N6_4->N6_3;
+N6_4->N6_5;
+N6_5->N6_4;
+{rank = same;F6;N6_3;N6_4;N6_5;}
+F7->N7_8;
+N7_8->F7;
+N7_8->N7_9;
+N7_9->N7_8;
+{rank = same;F7;N7_8;N7_9;}
+F8->N8_8;
+N8_8->F8;
+N8_8->N8_9;
+N8_9->N8_8;
+{rank = same;F8;N8_8;N8_9;}
+F9->N9_9;
+N9_9->F9;
+{rank = same;F9;N9_9;}
+C3->N6_3;
+N6_3->C3;
+C4->N4_4;
+N4_4->C4;
+N5_4->N4_4;
+N4_4->N5_4;
+N6_4->N5_4;
+N5_4->N6_4;
+C5->N4_5;
+N4_5->C5;
+N5_5->N4_5;
+N4_5->N5_5;
+N6_5->N5_5;
+N5_5->N6_5;
+C8->N7_8;
+N7_8->C8;
+N8_8->N7_8;
+N7_8->N8_8;
+C9->N7_9;
+N7_9->C9;
+N8_9->N7_9;
+N7_9->N8_9;
+N9_9->N8_9;
+N8_9->N9_9;
+}
