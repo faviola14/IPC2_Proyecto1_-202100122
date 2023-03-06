@@ -44,3 +44,55 @@ class ListaSimpleEnlazada2:
             else:
                 break
         print(cadena)
+    
+    def organismo(self,fila, columna):
+        contador="hola"
+        nodoAux = self.primero
+        while True:
+            if nodoAux.fila is not None:
+                
+                if nodoAux.fila ==str(fila)  and nodoAux.columna == str(columna):
+                    contador =str(nodoAux.codigoOrganismo)
+                
+                if nodoAux.siguiente is not None:
+                    nodoAux = nodoAux.siguiente
+                else:
+                    break
+            else:
+                break
+        return contador
+    
+    def Existe(self,x,y):
+
+        contador=0
+        nodoAux = self.primero
+        while True:
+            if nodoAux.fila is not None:
+                
+                if nodoAux.fila ==str(x) and nodoAux.columna == str(y):
+                    contador =1
+                
+                if nodoAux.siguiente is not None:
+                    nodoAux = nodoAux.siguiente
+                else:
+                    break
+            else:
+                break
+        return contador
+
+    def color(self,fila, columna):
+        contador="hola"
+        nodoAux = self.primero
+        while True:
+            if nodoAux.fila is not None:
+                
+                if nodoAux.fila ==str(fila)  and nodoAux.columna == str(columna):
+                    contador =str(nodoAux.color)
+                
+                if nodoAux.siguiente is not None:
+                    nodoAux = nodoAux.siguiente
+                else:
+                    break
+            else:
+                break
+        return contador

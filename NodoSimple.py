@@ -4,7 +4,6 @@ class NodoS:
         self.codigo = codigo
         self.nombre = nombre
         self.color = color
-        
         self.siguiente = None
 
 class NodoS22:
@@ -13,4 +12,5 @@ class NodoS22:
         self.descripcion = descripcion
         self.filas = filas
         self.columnas = columnas
+
         self.siguiente = None

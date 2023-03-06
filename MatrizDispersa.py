@@ -73,7 +73,7 @@ class MatrizDispersa:
     def graficarDot(self, nombre,muestra):
         
         grafo = 'digraph T{ \nnode[shape=box fontname="Arial" fillcolor="white" style=filled ]'
-        grafo += '\nroot[label = \"capa: '+ str(self.capa) +'\", group=1]\n'
+        grafo += '\nroot[label = \"Dato: '+ str(self.capa) +'\", group=1]\n'
         grafo += '''label = "{}" \nfontname="Arial Black" \nfontsize="15pt" \n
                     \n'''.format(muestra)
 
@@ -128,7 +128,9 @@ class MatrizDispersa:
             while aux2 != None:
                 
                 if aux2.dato != None:
-                    grafo += 'N{}_{}[label="{}",group="{}", fillcolor="{}"];\n'.format(aux2.fila, aux2.col, aux2.organismo, int(aux2.col)+1,aux2.dato)          
+                    color=aux2.dato
+                    color=color.replace("\"\"","")
+                    grafo += 'N{}_{}[label="{}",group="{}", fillcolor="{}"];\n'.format(aux2.fila, aux2.col, aux2.organismo, int(aux2.col)+1,color)          
                 aux2 = aux2.derecha
             aux = aux.siguiente
             if aux != None:

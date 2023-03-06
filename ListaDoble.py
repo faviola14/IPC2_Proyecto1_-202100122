@@ -30,7 +30,7 @@ class ListaDoble:
         cadena = ''
         while True:
             if nodoAux.dato is not None:
-                cadena += "(" + str(nodoAux.x) + " " + str(nodoAux.y) + " " + str(nodoAux.dato) +  ")"
+                cadena += "(" + str(nodoAux.x) + " " + str(nodoAux.y) + " " + str(nodoAux.dato) + " "+ str(nodoAux.nombre) + " " + str(nodoAux.color)+ ")"
                 if nodoAux.siguiente is not None:
                     nodoAux = nodoAux.siguiente
                     cadena += " -> "
@@ -58,6 +58,28 @@ class ListaDoble:
             else:
                 break
         return contador
+    
+    
+    def NombreOrganismo(self,x,y):
+
+        contador=0
+        nodoAux = self.primero
+        while True:
+            if nodoAux.dato is not None:
+                
+                if nodoAux.x ==str(x) and nodoAux.y == str(y):
+                    contador =1
+                    organismo=nodoAux.dato
+                
+                if nodoAux.siguiente is not None:
+                    nodoAux = nodoAux.siguiente
+                else:
+                    break
+            else:
+                break
+        return organismo
+    
+    
 
     def graficar(self):
 

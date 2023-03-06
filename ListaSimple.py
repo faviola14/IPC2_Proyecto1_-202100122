@@ -103,6 +103,8 @@ class ListaSimpleEnlazada22:
         else:
             self.ultimo.siguiente = dato
             self.ultimo = dato
+    
+    
 
 
     def print(self):
@@ -155,3 +157,33 @@ class ListaSimpleEnlazada22:
                 return None
         
         return True
+    
+    def m(self,nombre):
+        
+        nodoAux = self.primero
+        contador=0
+        while nodoAux.codigo != nombre:
+            contador=contador+1
+            
+            if nodoAux.siguiente is not None:
+                
+                nodoAux = nodoAux.siguiente
+            else:
+                return None
+        
+        return int(nodoAux.filas)
+    
+    def n(self,nombre):
+        
+        nodoAux = self.primero
+        contador=0
+        while nodoAux.codigo != nombre:
+            contador=contador+1
+            
+            if nodoAux.siguiente is not None:
+                
+                nodoAux = nodoAux.siguiente
+            else:
+                return None
+        
+        return int(nodoAux.columnas)
