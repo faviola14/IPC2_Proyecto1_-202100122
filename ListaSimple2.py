@@ -6,16 +6,45 @@ class ListaSimpleEnlazada2:
         self.primero = NodoS2()
         self.ultimo = NodoS2()
 
+    
+    '''def agregar(self, nuevoNodo):
+        
+        if self.primero==None:
+            self.primero == nuevoNodo
+            self.ultimo = nuevoNodo
+            return
+        
+        nodoTmp= self.primero
+        
+        while nodoTmp.siguiente !=None:
+            nodoTmp =nodoTmp.siguiente
+            
+        nodoTmp.siguiente = nuevoNodo'''
+        
+    '''def agregar(self, dato):
+        if self.primero is None:
+            self.primero = dato
+            return 
+        actual = self.primero 
+        while actual.siguiente:
+            actual= actual.siguiente
+        actual.siguiente= dato'''
+        
+    
+
     def agregar(self, dato):
         if self.primero.codigoOrganismo is None:
             self.primero = dato
             self.ultimo = dato
+            
         elif self.primero.siguiente is None:
             self.primero.siguiente = dato
             self.ultimo = dato
         else:
             self.ultimo.siguiente = dato
             self.ultimo = dato
+    
+        
 
     '''def print(self):
 
@@ -41,7 +70,7 @@ class ListaSimpleEnlazada2:
         actual=self.primero
 
         while actual != None:
-            print ('({}  {}  {}) -> '.format(actual.fila, actual.columna,actual.codigoOrganismo))
+            print ('({}  {}  {}) -> '.format(actual.fila, actual.columna,actual.codigoOrganismo),end="")
             actual = actual.siguiente
             
 
@@ -56,7 +85,31 @@ class ListaSimpleEnlazada2:
                 break
         print(cadena)
     
-    def organismo(self,fila, columna):
+    def organismo(self, x,y):
+        contador="hola"
+        if self.primero is None:
+            return contador
+        
+        if self.primero.fila == str(x) and self.primero.columna == str(y):
+            contador =str(self.primero.codigoOrganismo)
+            return contador
+
+        prev_node = self.primero
+        curr_node = self.primero.siguiente
+        while curr_node is not None:
+            if curr_node.fila == str(x) and curr_node.columna == str(y):
+                contador =str(self.primero.codigoOrganismo)
+
+                return contador
+            prev_node = curr_node
+            curr_node = curr_node.siguiente
+            
+        return contador
+    
+    
+    
+    
+    '''def organismo(self,fila, columna):
         contador="hola"
         nodoAux = self.primero
         while True:
@@ -71,9 +124,9 @@ class ListaSimpleEnlazada2:
                     break
             else:
                 break
-        return contador
+        return contador'''
     
-    def Existe(self,x,y):
+    '''def Existe(self,x,y):
 
         contador=0
         nodoAux = self.primero
@@ -89,9 +142,54 @@ class ListaSimpleEnlazada2:
                     break
             else:
                 break
+        return contador'''
+
+    def Existe(self, x,y):
+        contador=0
+        if self.primero is None:
+            return contador
+        
+        if self.primero.fila == str(x) and self.primero.columna == str(y):
+            contador =1
+            return contador
+
+        prev_node = self.primero
+        curr_node = self.primero.siguiente
+        while curr_node is not None:
+            if curr_node.fila == str(x) and curr_node.columna == str(y):
+                contador =1
+
+                return contador
+            prev_node = curr_node
+            curr_node = curr_node.siguiente
+            
         return contador
 
-    def color(self,fila, columna):
+
+
+    def color(self, x,y):
+        contador=0
+        if self.primero is None:
+            return contador
+        
+        if self.primero.fila == str(x) and self.primero.columna == str(y):
+            contador =str(self.primero.color)
+            return contador
+
+        prev_node = self.primero
+        curr_node = self.primero.siguiente
+        while curr_node is not None:
+            if curr_node.fila == str(x) and curr_node.columna == str(y):
+                contador =str(self.primero.color)
+
+                return contador
+            prev_node = curr_node
+            curr_node = curr_node.siguiente
+            
+        return contador
+    
+    
+    '''def color(self,fila, columna):
         contador="hola"
         nodoAux = self.primero
         while True:
@@ -106,7 +204,7 @@ class ListaSimpleEnlazada2:
                     break
             else:
                 break
-        return contador
+        return contador'''
     
     '''def eliminar(self,x, y):
         actual =self.primero
@@ -141,3 +239,26 @@ class ListaSimpleEnlazada2:
             else:
                 aux2 = aux1
                 aux1 = aux1.siguiente'''
+                
+    def eliminar(self, x,y):
+        
+        if self.primero is None:
+            return
+
+        
+        if self.primero.fila == str(x) and self.primero.columna == str(y):
+            self.primero= self.primero.siguiente
+            return
+
+        
+        prev_node = self.primero
+        curr_node = self.primero.siguiente
+        while curr_node is not None:
+            if curr_node.fila == str(x) and curr_node.columna == str(y):
+                prev_node.siguiente = curr_node.siguiente
+                return
+            prev_node = curr_node
+            curr_node = curr_node.siguiente
+
+        
+        return
