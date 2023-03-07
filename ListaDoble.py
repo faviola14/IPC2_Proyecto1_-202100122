@@ -24,7 +24,7 @@ class ListaDoble:
             self.ultimo = dato
 
 
-    def print(self):
+    '''def print(self):
 
         nodoAux = self.primero
         cadena = ''
@@ -38,10 +38,20 @@ class ListaDoble:
                     break
             else:
                 break
-        print(cadena)     
+        print(cadena) '''   
+        
+    
+    def print (self):
+        if self.primero is None:
+            return
+        actual = self.primero
+        print ('({}  {}  {}  {}  {}) -> '.format(actual.x, actual.y,actual.dato,actual.nombre,actual.color),end="")
+        while actual.siguiente:
+            actual = actual.siguiente
+            print ('({}  {}  {}  {}  {}) -> '.format(actual.x, actual.y,actual.dato,actual.nombre,actual.color),end="")
 
 
-    def Existe(self,x,y):
+    '''def Existe(self,x,y):
 
         contador=0
         nodoAux = self.primero
@@ -57,18 +67,40 @@ class ListaDoble:
                     break
             else:
                 break
+        return contador'''
+    
+    def Existe(self, x,y):
+        contador=0
+        if self.primero is None:
+            return contador
+
+        if self.primero.x == str(x) and self.primero.y == str(y):
+            contador =1
+            if self.primero is not None:
+                self.primero.ultimo = None
+            return contador
+
+        curr_node = self.primero
+        while curr_node is not None:
+            if self.primero.x == str(x) and self.primero.y == str(y):
+                contador =1
+                prev_node = curr_node.ultimo
+                
+                if curr_node.siguiente is not None:
+                    curr_node.siguiente.ultimo = prev_node
+                return contador
+            curr_node = curr_node.siguiente
         return contador
     
     
-    def NombreOrganismo(self,x,y):
+    '''def NombreOrganismo(self,x,y):
 
-        contador=0
+        organismo="hola"
         nodoAux = self.primero
         while True:
             if nodoAux.dato is not None:
                 
                 if nodoAux.x ==str(x) and nodoAux.y == str(y):
-                    contador =1
                     organismo=nodoAux.dato
                 
                 if nodoAux.siguiente is not None:
@@ -77,7 +109,54 @@ class ListaDoble:
                     break
             else:
                 break
-        return organismo
+        return organismo'''
+    
+    
+    
+    def NombreOrganismo(self, x,y):
+        contador="hola"
+        if self.primero is None:
+            return contador
+
+        if self.primero.x == str(x) and self.primero.y == str(y):
+            contador =self.primero.dato
+            if self.primero is not None:
+                self.primero.ultimo = None
+            return contador
+
+        curr_node = self.primero
+        while curr_node is not None:
+            if self.primero.x == str(x) and self.primero.y == str(y):
+                contador =self.primero.dato
+                prev_node = curr_node.ultimo
+                
+                if curr_node.siguiente is not None:
+                    curr_node.siguiente.ultimo = prev_node
+                return contador
+            curr_node = curr_node.siguiente
+        return contador
+    
+    
+    def eliminar(self, x,y):
+        if self.primero is None:
+            return
+
+        if self.primero.x == str(x) and self.primero.y == str(y):
+            self.primero = self.primero.siguiente
+            if self.primero is not None:
+                self.primero.ultimo = None
+            return
+
+        curr_node = self.primero
+        while curr_node is not None:
+            if self.primero.x == str(x) and self.primero.y == str(y):
+                prev_node = curr_node.ultimo
+                prev_node.siguiente = curr_node.siguiente
+                if curr_node.siguiente is not None:
+                    curr_node.siguiente.ultimo = prev_node
+                return
+            curr_node = curr_node.siguiente
+        return
     
     
 
