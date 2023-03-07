@@ -18,11 +18,12 @@ listaMuestras=ListaSimpleEnlazada22()
 celdasVivas=ListaSimpleEnlazada2()
 rejilla=ListaDoble()
 matriz0 = MatrizDispersa()
+CeldasAnalizar=ListaSimpleEnlazada2()
 menu=0
 filename1=""
 
 #INICIO DEL PROGRAMA
-def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu):
+def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu,celdasA):
     muestra=muestra
     matriz0 = MatrizDispersa()
     matriz0=mu
@@ -36,6 +37,8 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu):
     
     celdasVivas=ListaSimpleEnlazada2()
     celdasVivas=vivas
+    CeldasAnalizar=ListaSimpleEnlazada2()
+    CeldasAnalizar=celdasA
     
     if menu==0:
     
@@ -58,10 +61,10 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu):
         if listaMuestras.buscarMuestra(muestra):
             celdasVivas = cargarVivas(filename1,muestra,listaOrganismos)
             celdasVivas.print()
-            Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0)
+            Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
         else:
             print(Fore.RED +  "El código ingresado no corresponde a ninguna muestra registrada")
-            Inicio(listaOrganismos,listaMuestras,1,filename1,celdasVivas,rejilla,muestra,matriz0)
+            Inicio(listaOrganismos,listaMuestras,1,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
         
     if menu==2:
         print(Fore.RED +  "--------------OPCIONES---------------")
@@ -73,8 +76,9 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu):
         if opc=='1' :
             print(Fore.BLUE+"-----------------------------------------------------------------------")
             rejilla=generarRejilla(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1) 
+            Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
             print("-----------------------------------------------------------------------")
-            Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0)
+            Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
         elif  opc=='2':
             print(Fore.BLUE+"-----------------------------------------------------------------------")
             print(Fore.RED +  "--------------Colocación de Organismo---------------")
@@ -82,26 +86,33 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu):
             for x in range(1, numO+1):
                 fila = input(Fore.YELLOW + "Fila: ")
                 columna = input(Fore.YELLOW + "Columna: ")
-                listaOrganismos.NombreOrganismos()
-                nuevoO = input(Fore.YELLOW + "Código Organismo: ")
-                if listaOrganismos.buscarOrganismo(str(nuevoO)):
-                    color= listaOrganismos.color(str(nuevoO))
-                    
-                    nuevoVivo=NodoS2(fila,columna,color,str(nuevoO),muestra)
-                    celdasVivas.agregar(nuevoVivo)
-                    
-                    rejilla=generarRejilla(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1) 
-                    
-                    print(Fore.BLUE+"-----------------------------------------------------------------------")
-                else:
-                    print(Fore.RED +  "El código ingresado no corresponde a ningún Organismo registrado")
-                    Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0)
+                if celdasVivas.Existe(fila,columna)==0:
+                    listaOrganismos.NombreOrganismos()
+                    nuevoO = input(Fore.YELLOW + "Código Organismo: ")
+                    if listaOrganismos.buscarOrganismo(str(nuevoO)):
+                        color= listaOrganismos.color(str(nuevoO))
+                        
+                        nuevoVivo=NodoS2(fila,columna,color,str(nuevoO),muestra)
+                        celdasVivas.agregar(nuevoVivo)
+                        nuevoAnalisis=NodoS2(str(fila),str(columna),color,str(nuevoO),muestra)
+                        CeldasAnalizar.agregar(nuevoAnalisis)
+                        #CeldasAnalizar.print()
+                        rejilla=generarRejilla(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1) 
+                        #Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
+                        print(Fore.BLUE+"-----------------------------------------------------------------------")
+                    else:
+                        print(Fore.RED +  "El código ingresado no corresponde a ningún Organismo registrado")
+                        Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
+                else: 
+                    print(Fore.RED +  "Ya hay un organismo en esa celda. Inténtelo de nuevo")
+                    x=x+1
                 
                 
             
-        elif  opc=='2':
+        elif  opc=='3':
             print(Fore.BLUE+"-----------------------------------------------------------------------")
-            #simulacion(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1)
+            simulacion(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1,CeldasAnalizar)
+            Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
         elif  opc=='4':
             print(Fore.BLUE+"-----------------------------------------------------------------------")
             matriz0 = MatrizDispersa()
@@ -109,15 +120,17 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu):
             listaMuestras=ListaSimpleEnlazada22()
             rejilla=ListaDoble()
             celdasVivas=ListaSimpleEnlazada2()
+            CeldasAnalizar=ListaSimpleEnlazada2()
+            
             filename1=""
             muestra=""
-            Inicio(listaOrganismos,listaMuestras,0,filename1,celdasVivas,rejilla,muestra,matriz0)
+            Inicio(listaOrganismos,listaMuestras,0,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
         else:
             print(Fore.RED +  "No es una opción correcta")
     
 
 #CREAR SIMULACIÓN
-def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,filename1):
+def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,filename1,CeldasA):
     print("simulando")
     libres =0
     ocupadas=0
@@ -127,14 +140,14 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
     muestras=ListaSimpleEnlazada22()
     muestras=muestrasL
     matrizA = MatrizDispersa()
-    
+    CeldasAnalizar=ListaSimpleEnlazada2()
+    CeldasAnalizar=CeldasA
+    #CeldasAnalizar.print()
     m=muestras.m(muestra)
     n=muestras.n(muestra)
     
     for x in range(1, m+1):
         for y in range(1, n+1):
-            
-            
             if celdasVivas.Existe(x,y)== 0:
                 nuevaCelda=NodoD("",x,y,0,"#FFFFFF")
                 rejilla.agregar(nuevaCelda)
@@ -143,27 +156,61 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
                 matrizA.insertar(n1)
                 
             elif celdasVivas.Existe(x,y)==1:
+                CeldasAnalizar.print()
+                if (CeldasAnalizar.Existe(x,y)==1):
+                    #print("existe")
+                    if (celdasVivas.Existe(x,y+1)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x,y+1)) or (celdasVivas.Existe(x,y-1)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x,y-1)) or (celdasVivas.Existe(x+1,y)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x+1,y)) or (celdasVivas.Existe(x-1,y)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x-1,y)):
+                        print('La celda ({},{}) SOBREVIVE'.format(x, y))
+                        
+                        color=celdasVivas.color(x,y)
+                        codigoOrganismo=celdasVivas.organismo(x,y)
+                        nuevaCelda=NodoD(codigoOrganismo,x,y,1,color)
+                        rejilla.agregar(nuevaCelda)
+                        ocupadas=ocupadas+1
+                        
+                        n1 = NodoCeldas(x,y,color,codigoOrganismo)
+                        matrizA.insertar(n1)
+                        
+                        
+                        
+                        #if 
+                        
+                        CeldasAnalizar.eliminar(x,y)
+                        CeldasAnalizar.print()
+                    else:
+                        print('La celda ({},{}) NO SOBREVIVE'.format(x, y))
+                        nuevaCelda=NodoD("",x,y,0,"#FFFFFF")
+                        rejilla.agregar(nuevaCelda)
+                        libres=libres+1
+                        n1 = NodoCeldas(x,y,"#FFFFFF","")
+                        matrizA.insertar(n1)
+                        #print("aun no ha eliminado?")
+                        celdasVivas.eliminar(x,y)
+                        CeldasAnalizar.eliminar(x,y)
+                        #print("ya elimino?")
+                        celdasVivas.print()
+                        CeldasAnalizar.print()
+                        
+                else:
+                    color=celdasVivas.color(x,y)
+                    codigoOrganismo=celdasVivas.organismo(x,y)
+                    nuevaCelda=NodoD(codigoOrganismo,x,y,1,color)
+                    rejilla.agregar(nuevaCelda)
+                    ocupadas=ocupadas+1
+                    
+                    n1 = NodoCeldas(x,y,color,codigoOrganismo)
+                    matrizA.insertar(n1)
                 
-                
-                color=celdasVivas.color(x,y)
-                codigoOrganismo=celdasVivas.organismo(x,y)
-                nuevaCelda=NodoD(codigoOrganismo,x,y,1,color)
-                rejilla.agregar(nuevaCelda)
-                ocupadas=ocupadas+1
-                
-                n1 = NodoCeldas(x,y,color,codigoOrganismo)
-                matrizA.insertar(n1)
                 
             else:
                 print("algo falló con celdas ocupadas :/")
-                
-                
-            
-    rejilla.print()
+    
+    
+    #rejilla.print()
     print("CELDAS LIBRES: "+ str(libres)+". CELDAS OCUPADAS: "+str(ocupadas)+". Total: "+str(libres+ocupadas))
     matrizA.graficarDot("Actual",muestra)
     
-    Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0)
+    #Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
     return rejilla
 
 
@@ -199,7 +246,7 @@ def cargarArchivo(filename1,muestra):
             muestras.agregar(nuevaMuestra)
             
     print(Fore.GREEN +  "Organismo agregado con éxito, Muestras Agregadas con éxito")
-    Inicio(organismosLista,muestras,1,filename1,celdasVivas,rejilla,muestra,matriz0)
+    Inicio(organismosLista,muestras,1,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
 
 
 
@@ -245,7 +292,7 @@ def generarRejilla(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,
     print("CELDAS LIBRES: "+ str(libres)+". CELDAS OCUPADAS: "+str(ocupadas)+". Total: "+str(libres+ocupadas))
     matriz0.graficarDot("Inicial",muestra)
     
-    Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0)
+    
     return rejilla
 
 
@@ -275,5 +322,8 @@ def cargarVivas(filename, nombreM,listaOrganismos):
                         
     return celdasVivas
 
+def salidaXML():
+    print()
 
-Inicio(listaOrganismos,listaMuestras,menu,filename1,celdasVivas,rejilla,muestra,matriz0)
+
+Inicio(listaOrganismos,listaMuestras,menu,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)

@@ -17,7 +17,7 @@ class ListaSimpleEnlazada2:
             self.ultimo.siguiente = dato
             self.ultimo = dato
 
-    def print(self):
+    '''def print(self):
 
         nodoAux = self.primero
         cadena = ''
@@ -33,7 +33,18 @@ class ListaSimpleEnlazada2:
             else:
                 break
         
-        print(cadena)
+        print(cadena)'''
+        
+
+
+    def print(self):
+        actual=self.primero
+
+        while actual != None:
+            print ('({}  {}  {}) -> '.format(actual.fila, actual.columna,actual.codigoOrganismo))
+            actual = actual.siguiente
+            
+
 
     def fila(self):
         nodoAux = self.primero
@@ -96,3 +107,37 @@ class ListaSimpleEnlazada2:
             else:
                 break
         return contador
+    
+    '''def eliminar(self,x, y):
+        actual =self.primero
+        anterior=None
+
+        while actual and actual.fila == str(x) and actual.columna == str(y):
+            anterior=actual
+            actual=actual.siguiente
+
+        if anterior is None:
+            self.primero = actual.siguiente
+            actual.siguiente = None
+        elif actual:
+            anterior.siguiente = actual.siguiente
+            actual.siguiente = None'''
+    
+    '''def eliminar(self, x, y):
+        aux1 = self.primero
+        aux2 = None
+        while(aux1!=None):
+            if(aux1.fila == str(x) and aux1.columna == str(y)):
+                if(aux1 == self.primero):
+                    aux1 = aux1.siguiente
+                    ##self.cabecera = self.cabecera.siguiente
+                    break;
+                elif(aux1.siguiente == None):
+                    aux2.siguiente = None
+                else:
+                    aux2.siguiente = aux1.siguiente
+                    aux1.siguiente = None
+                    break;
+            else:
+                aux2 = aux1
+                aux1 = aux1.siguiente'''
