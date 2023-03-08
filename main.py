@@ -702,6 +702,8 @@ def cargarVivas(filename, nombreM,listaOrganismos):
                         
     return celdasVivas
 
+
+#SALIDA XML
 def salidaXML(listaOrganismos,celdasVivas,muestra,descripcion,m,n):
     """
     It takes a list of organisms, a list of cells, a sample number, a description, and two integers, and
