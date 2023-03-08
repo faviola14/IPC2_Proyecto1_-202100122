@@ -3,6 +3,7 @@ from ListaEncabezado import ListaEncabezado
 from NodoCeldas import NodoCeldas
 import os
 
+# This class represents a sparse matrix.
 class MatrizDispersa:
     def __init__(self) -> None:
         self.capa = 0
@@ -71,6 +72,21 @@ class MatrizDispersa:
                             aux2 = aux2.abajo
 
     def graficarDot(self, nombre,muestra):
+        """
+        It creates a .txt file with the graphviz code, then it converts it to a .pdf file.
+        I'm trying to make a function that does the same thing, but with a graphviz object instead of a
+        .txt file.
+        I've tried this:
+        <code>def graficarDot(self, nombre,muestra):
+                
+                grafo = 'digraph T{ \nnode[shape=box fontname="Arial" fillcolor="white" style=filled ]'
+                grafo += '\nroot[label = \"Dato: '+ str(self.capa) +'\", group=1]\n'
+                grafo += '''label = "{}" \nfontname="Arial Black" \nfontsize="15pt" \n
+                            \n'''.format(muestra)
+        
+        :param nombre: name of the file
+        :param muestra: the name of the graph
+        """
         
         grafo = 'digraph T{ \nnode[shape=box fontname="Arial" fillcolor="white" style=filled ]'
         grafo += '\nroot[label = \"Dato: '+ str(self.capa) +'\", group=1]\n'

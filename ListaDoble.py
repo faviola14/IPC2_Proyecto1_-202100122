@@ -23,22 +23,6 @@ class ListaDoble:
             dato.anterior = self.ultimo
             self.ultimo = dato
 
-
-    '''def print(self):
-
-        nodoAux = self.primero
-        cadena = ''
-        while True:
-            if nodoAux.dato is not None:
-                cadena += "(" + str(nodoAux.x) + " " + str(nodoAux.y) + " " + str(nodoAux.dato) + " "+ str(nodoAux.nombre) + " " + str(nodoAux.color)+ ")"
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                    cadena += " -> "
-                else:
-                    break
-            else:
-                break
-        print(cadena) '''   
         
     
     def print (self):
@@ -51,23 +35,6 @@ class ListaDoble:
             print ('({}  {}  {}  {}  {}) -> '.format(actual.x, actual.y,actual.dato,actual.nombre,actual.color),end="")
 
 
-    '''def Existe(self,x,y):
-
-        contador=0
-        nodoAux = self.primero
-        while True:
-            if nodoAux.dato is not None:
-                
-                if nodoAux.x ==str(x) and nodoAux.y == str(y):
-                    contador =1
-                
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                else:
-                    break
-            else:
-                break
-        return contador'''
     
     def Existe(self, x,y):
         contador=0
@@ -92,24 +59,6 @@ class ListaDoble:
             curr_node = curr_node.siguiente
         return contador
     
-    
-    '''def NombreOrganismo(self,x,y):
-
-        organismo="hola"
-        nodoAux = self.primero
-        while True:
-            if nodoAux.dato is not None:
-                
-                if nodoAux.x ==str(x) and nodoAux.y == str(y):
-                    organismo=nodoAux.dato
-                
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                else:
-                    break
-            else:
-                break
-        return organismo'''
     
     
     

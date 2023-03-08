@@ -6,46 +6,9 @@ from xml.dom import minidom
 class ListaSimpleEnlazada2:
     def __init__(self) -> None:
         self.primero = NodoS2()
-        #self.ultimo = NodoS2()
 
     
-    '''def agregar(self, nuevoNodo):
-        
-        if self.primero==None:
-            self.primero == nuevoNodo
-            self.ultimo = nuevoNodo
-            return
-        
-        nodoTmp= self.primero
-        
-        while nodoTmp.siguiente !=None:
-            nodoTmp =nodoTmp.siguiente
-            
-        nodoTmp.siguiente = nuevoNodo'''
-        
-    '''def agregar(self, dato):
-        if self.primero is None:
-            self.primero = dato
-            return 
-        actual = self.primero 
-        while actual.siguiente:
-            actual= actual.siguiente
-        actual.siguiente= dato'''
-        
-        
-        
-    '''def agregar(self, data):
-        new_node = data
-        
-        if self.primero is None:
-            self.primero = new_node
-            return
-
-        last_node = self.primero
-        while last_node.siguiente is not None:
-            last_node = last_node.siguiente
-
-        last_node.siguiente = new_node'''
+    
     
 
     def agregar(self, dato):
@@ -62,23 +25,7 @@ class ListaSimpleEnlazada2:
     
         
 
-    '''def print(self):
-
-        nodoAux = self.primero
-        cadena = ''
-        while True:
-            if nodoAux.codigoOrganismo is not None:
-                cadena += "(" + nodoAux.fila + " " + nodoAux.columna +" " + nodoAux.codigoOrganismo + ")"
-
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                    cadena += " -> "
-                else:
-                    break
-            else:
-                break
-        
-        print(cadena)'''
+    
         
 
 
@@ -125,40 +72,7 @@ class ListaSimpleEnlazada2:
     
     
     
-    '''def organismo(self,fila, columna):
-        contador="hola"
-        nodoAux = self.primero
-        while True:
-            if nodoAux.fila is not None:
-                
-                if nodoAux.fila ==str(fila)  and nodoAux.columna == str(columna):
-                    contador =str(nodoAux.codigoOrganismo)
-                
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                else:
-                    break
-            else:
-                break
-        return contador'''
     
-    '''def Existe(self,x,y):
-
-        contador=0
-        nodoAux = self.primero
-        while True:
-            if nodoAux.fila is not None:
-                
-                if nodoAux.fila ==str(x) and nodoAux.columna == str(y):
-                    contador =1
-                
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                else:
-                    break
-            else:
-                break
-        return contador'''
 
     def Existe(self, x,y):
         contador=0
@@ -205,56 +119,6 @@ class ListaSimpleEnlazada2:
         return contador
     
     
-    '''def color(self,fila, columna):
-        contador="hola"
-        nodoAux = self.primero
-        while True:
-            if nodoAux.fila is not None:
-                
-                if nodoAux.fila ==str(fila)  and nodoAux.columna == str(columna):
-                    contador =str(nodoAux.color)
-                
-                if nodoAux.siguiente is not None:
-                    nodoAux = nodoAux.siguiente
-                else:
-                    break
-            else:
-                break
-        return contador'''
-    
-    '''def eliminar(self,x, y):
-        actual =self.primero
-        anterior=None
-
-        while actual and actual.fila == str(x) and actual.columna == str(y):
-            anterior=actual
-            actual=actual.siguiente
-
-        if anterior is None:
-            self.primero = actual.siguiente
-            actual.siguiente = None
-        elif actual:
-            anterior.siguiente = actual.siguiente
-            actual.siguiente = None'''
-    
-    '''def eliminar(self, x, y):
-        aux1 = self.primero
-        aux2 = None
-        while(aux1!=None):
-            if(aux1.fila == str(x) and aux1.columna == str(y)):
-                if(aux1 == self.primero):
-                    aux1 = aux1.siguiente
-                    ##self.cabecera = self.cabecera.siguiente
-                    break;
-                elif(aux1.siguiente == None):
-                    aux2.siguiente = None
-                else:
-                    aux2.siguiente = aux1.siguiente
-                    aux1.siguiente = None
-                    break;
-            else:
-                aux2 = aux1
-                aux1 = aux1.siguiente'''
                 
     def eliminar(self, x,y):
         

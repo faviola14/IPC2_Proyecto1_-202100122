@@ -131,6 +131,9 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu,celdasA):
 
 #CREAR SIMULACIÓN
 def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,filename1,CeldasA):
+    """
+    This function simulates the growth of a population of organisms 
+    """
     print("ANALIZANDO")
     libres =0
     ocupadas=0
@@ -572,6 +575,12 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
 
 #CARGA DE ARCHIVO
 def cargarArchivo(filename1,muestra):
+    """
+    It loads an XML file and creates a list of organisms and a list of samples
+    
+    :param filename1: The name of the XML file
+    :param muestra: is a string that contains the name of the sample
+    """
     matriz = MatrizDispersa()
     tree = ET.parse(filename1)
     organismos = tree.getroot()
@@ -604,6 +613,17 @@ def cargarArchivo(filename1,muestra):
 
 #GENERAR Muestra
 def generarRejilla(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,filename1):
+    """
+    It creates a grid of cells, and returns it
+    
+    :param celdasVivasL: a list of cells that are alive
+    :param muestra: the name of the sample
+    :param muestrasL: List of samples
+    :param listaOrganismos: a list of organisms
+    :param listaMuestras: list of samples
+    :param filename1: the name of the file that contains the data
+    :return: A list of lists.
+    """
     libres =0
     ocupadas=0
     rejilla=ListaDoble()
@@ -651,6 +671,14 @@ def generarRejilla(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,
 
 #CARGA DE Bacterias Vivas
 def cargarVivas(filename, nombreM,listaOrganismos):
+    """
+    It takes a filename, a name, and a list of organisms, and returns a list of cells that are alive
+    
+    :param filename: the name of the XML file
+    :param nombreM: the name of the sample
+    :param listaOrganismos: is a list of organisms, each organism has a name and a color
+    :return: A list of living cells
+    """
     
     tree = ET.parse(filename)
     organismos = tree.getroot()
@@ -675,6 +703,17 @@ def cargarVivas(filename, nombreM,listaOrganismos):
     return celdasVivas
 
 def salidaXML(listaOrganismos,celdasVivas,muestra,descripcion,m,n):
+    """
+    It takes a list of organisms, a list of cells, a sample number, a description, and two integers, and
+    writes an XML file
+    
+    :param listaOrganismos: a list of organisms
+    :param celdasVivas: a list of tuples, each tuple is a cell that is alive
+    :param muestra: the number of the sample
+    :param descripcion: a string that describes the current state of the simulation
+    :param m: number of rows
+    :param n: number of rows
+    """
     archivo = open("./Salida.xml", "a")
     elemento_1=celdasVivas.xmlMuestras(muestra,descripcion,str(m),str(n))
     
