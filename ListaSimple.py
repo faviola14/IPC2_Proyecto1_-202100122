@@ -1,5 +1,7 @@
 from NodoSimple import NodoS
 from NodoSimple import NodoS22
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
 
 # It's a linked list of nodes, where each node is a linked list of data.
 class ListaSimpleEnlazada:
@@ -83,7 +85,27 @@ class ListaSimpleEnlazada:
                 return None
         
         return nodoAux.color
+    
+    def xmlOrganismos(self):
+        elemento_1 = ET.Element('datosMarte')
+        elemento_2 = ET.SubElement(elemento_1, "listaOrganismos")
+        
+        actual=self.primero
 
+        while actual != None:
+            elemento_21 = ET.SubElement(elemento_2, "organismo")
+            elemento_211 = ET.SubElement(elemento_21, "codigo")
+            elemento_212 = ET.SubElement(elemento_21, "nombre")
+            elemento_213 = ET.SubElement(elemento_21, "color")
+            elemento_211.text=actual.codigo
+            elemento_212.text=actual.nombre
+            elemento_213.text=actual.color
+            
+            actual = actual.siguiente
+        
+        
+        return elemento_1
+        
 
 
 ##############################################################################
@@ -187,3 +209,19 @@ class ListaSimpleEnlazada22:
                 return None
         
         return int(nodoAux.columnas)
+    
+    
+    def descripcion(self,nombre):
+        
+        nodoAux = self.primero
+        contador="descripcion"
+        while nodoAux.codigo != nombre:
+            contador= nodoAux.descripcion
+            
+            if nodoAux.siguiente is not None:
+                
+                nodoAux = nodoAux.siguiente
+            else:
+                return None
+        
+        return nodoAux.descripcion

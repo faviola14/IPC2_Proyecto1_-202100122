@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from xml.dom import minidom
 from colorama import Fore
 from tkinter import filedialog
 from ListaSimple import ListaSimpleEnlazada
@@ -11,6 +12,7 @@ from NodoSimple import  NodoS22
 from NodoSimple2 import  NodoS2
 from NodoCeldas import NodoCeldas
 from MatrizDispersa import MatrizDispersa
+
 
 muestra=""
 listaOrganismos=ListaSimpleEnlazada()
@@ -66,6 +68,7 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu,celdasA):
             Inicio(listaOrganismos,listaMuestras,1,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
         
     if menu==2:
+        
         print()
         print(Fore.RED +  "--------------OPCIONES---------------")
         print(Fore.RED+  "1. Ver Rejilla inicial")
@@ -561,7 +564,8 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
     print("CELDAS LIBRES: "+ str(libres)+". CELDAS OCUPADAS: "+str(ocupadas)+". Total: "+str(libres+ocupadas))
     print("COMIDAS: " + str(comidas))
     matrizA.graficarDot("Actual",muestra)
-    
+    descripcion= muestras.descripcion(muestra)
+    salidaXML(listaOrganismos,celdasVivas,muestra,descripcion,m,n)
     return rejilla
 
 
@@ -592,7 +596,7 @@ def cargarArchivo(filename1,muestra):
 
             nuevaMuestra=NodoS22(codigo,descripcion,filas,columnas)
             muestras.agregar(nuevaMuestra)
-            
+    
     print(Fore.GREEN +  "Organismo agregado con éxito, Muestras Agregadas con éxito")
     Inicio(organismosLista,muestras,1,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
 
@@ -612,8 +616,8 @@ def generarRejilla(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,
     m=muestras.m(muestra)
     n=muestras.n(muestra)
     
-    for x in range(1, m+1):
-        for y in range(1, n+1):
+    for x in range(1, int(m)+1):
+        for y in range(1, int(n)+1):
             if celdasVivas.Existe(x,y)== 0:
                 
                 nuevaCelda=NodoD("",x,y,0,"#FFFFFF")
@@ -670,10 +674,20 @@ def cargarVivas(filename, nombreM,listaOrganismos):
                         
     return celdasVivas
 
-def salidaXML():
+def salidaXML(listaOrganismos,celdasVivas,muestra,descripcion,m,n):
+    archivo = open("./Salida.xml", "a")
+    elemento_1=celdasVivas.xmlMuestras(muestra,descripcion,str(m),str(n))
     
     
-    print()
+    
+    archivo.write(ET.tostring(elemento_1, encoding='utf-8').decode('utf-8'))
+    elemento_1=listaOrganismos.xmlOrganismos()
+    
+    
+    
+    
+    archivo.write(ET.tostring(elemento_1, encoding='utf-8').decode('utf-8'))
+
 
 
 Inicio(listaOrganismos,listaMuestras,menu,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)

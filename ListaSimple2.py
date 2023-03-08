@@ -1,4 +1,6 @@
 from NodoSimple2 import NodoS2
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
 
 # It's a linked list with two data fields
 class ListaSimpleEnlazada2:
@@ -275,3 +277,36 @@ class ListaSimpleEnlazada2:
             curr_node = curr_node.siguiente
 
         return
+
+
+    def xmlMuestras(self,muestra,descripcion,m,n):
+        elemento_1 = ET.Element('datosMarte')
+        elemento_3 = ET.SubElement(elemento_1, "listaMuestras")
+        elemento_31 = ET.SubElement(elemento_3, "muestra")
+        elemento_311 = ET.SubElement(elemento_31, "codigo")
+        elemento_312 = ET.SubElement(elemento_31, "descripcion")
+        elemento_313 = ET.SubElement(elemento_31, "filas")
+        elemento_314 = ET.SubElement(elemento_31, "columnas")
+        
+        elemento_311.text=muestra
+        elemento_312.text=descripcion
+        elemento_313.text=m
+        elemento_314.text=n
+        
+        elemento_3141 = ET.SubElement(elemento_314, "listadoCeldasVivas")
+        
+        actual=self.primero
+
+        while actual != None:
+            elemento_31411 = ET.SubElement(elemento_3141, "celdaViva")
+            elemento_314111 = ET.SubElement(elemento_31411, "fila")
+            elemento_314112 = ET.SubElement(elemento_31411, "columna")
+            elemento_314113 = ET.SubElement(elemento_31411, "codigoOrganismo")
+            
+            elemento_314111.text =str(actual.fila)
+            elemento_314112.text =str(actual.columna)
+            elemento_314113.text =str(actual.codigoOrganismo)
+            
+            actual = actual.siguiente
+        
+        return elemento_1
