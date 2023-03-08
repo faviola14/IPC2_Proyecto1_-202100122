@@ -50,7 +50,6 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu,celdasA):
         print(Fore.BLUE + filename1)
         listaOrganismos = cargarArchivo(filename1,muestra)
         
-        
     
     if menu==1:
         
@@ -97,7 +96,6 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu,celdasA):
                         celdasVivas.agregar(nuevoVivo)
                         nuevoAnalisis=NodoS2(str(fila),str(columna),color,str(nuevoO),muestra)
                         CeldasAnalizar.agregar(nuevoAnalisis)
-                        #CeldasAnalizar.print()
                         rejilla=generarRejilla(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1) 
                         Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
                         print(Fore.BLUE+"-----------------------------------------------------------------------")
@@ -107,9 +105,7 @@ def Inicio(listaO,listaM,menu,filename1,vivas,rejilla1,muestra,mu,celdasA):
                 else: 
                     print(Fore.RED +  "Ya hay un organismo en esa celda. Inténtelo de nuevo")
                     x=x+1
-                
-                
-            
+
         elif  opc=='3':
             print(Fore.BLUE+"-----------------------------------------------------------------------")
             simulacion(celdasVivas,muestra,listaMuestras,listaOrganismos,listaMuestras,filename1,CeldasAnalizar)
@@ -135,6 +131,7 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
     print("ANALIZANDO")
     libres =0
     ocupadas=0
+    comidas=0
     rejilla=ListaDoble()
     celdasVivas=ListaSimpleEnlazada2()
     celdasVivas=celdasVivasL
@@ -143,7 +140,6 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
     matrizA = MatrizDispersa()
     CeldasAnalizar=ListaSimpleEnlazada2()
     CeldasAnalizar=CeldasA
-    #CeldasAnalizar.print()
     m=muestras.m(muestra)
     n=muestras.n(muestra)
     
@@ -157,9 +153,7 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
                 matrizA.insertar(n1)
                 
             elif celdasVivas.Existe(x,y)==1:
-                #CeldasAnalizar.print()
                 if (CeldasAnalizar.Existe(x,y)==1):
-                    #print("existe")
                     if (celdasVivas.Existe(x,y+1)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x,y+1)) or (celdasVivas.Existe(x,y-1)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x,y-1)) or (celdasVivas.Existe(x+1,y)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x+1,y)) or (celdasVivas.Existe(x-1,y)==1 and CeldasAnalizar.organismo(x,y)!= celdasVivas.organismo(x-1,y)):
                         
                         print()
@@ -174,69 +168,366 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
                         n1 = NodoCeldas(x,y,color,codigoOrganismo)
                         matrizA.insertar(n1)
                         
+                        if (celdasVivas.Existe(x+2,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x+2,y)):
+                            if celdasVivas.Existe(x+1,y)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x+1,y)==1:
+                                    rejilla.eliminar(x+1,y)
+                                    celdasVivas.eliminar(x+1,y)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x+1,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x+1,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x+1,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x+1),str(y)))
+                        
+                        if (celdasVivas.Existe(x-2,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-2,y)):
+                            if celdasVivas.Existe(x-1,y)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x-1,y)==1:
+                                    rejilla.eliminar(x-1,y)
+                                    celdasVivas.eliminar(x-1,y)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x-1,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x-1,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x-1,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x-1),str(y)))
+                                
+                        if (celdasVivas.Existe(x,y+2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y+2)):
+                            if celdasVivas.Existe(x,y+1)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x,y+1)==1:
+                                    rejilla.eliminar(x,y+1)
+                                    celdasVivas.eliminar(x,y+1)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x,y+1,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x,y+1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x,y+1,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x),str(y+1)))
+                                
+                        if (celdasVivas.Existe(x,y-2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y-2)):
+                            if celdasVivas.Existe(x,y-1)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x,y-1)==1:
+                                    rejilla.eliminar(x,y-1)
+                                    celdasVivas.eliminar(x,y-1)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x,y-1,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x,y-1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x,y-1,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x),str(y-1)))
+                                
+
+                        if (celdasVivas.Existe(x+3,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x+3,y)):
+                            if celdasVivas.Existe(x+2,y)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x+2,y)==1:
+                                    rejilla.eliminar(x+2,y)
+                                    celdasVivas.eliminar(x+2,y)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x+2,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x+2,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x+2,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x+2),str(y)))
+                        
+                        if (celdasVivas.Existe(x-3,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-3,y)):
+                            if celdasVivas.Existe(x-2,y)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x-2,y)==1:
+                                    rejilla.eliminar(x-2,y)
+                                    celdasVivas.eliminar(x-2,y)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x-2,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x-2,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x-2,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x-2),str(y)))
+                                
+                        if (celdasVivas.Existe(x,y+3)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y+3)):
+                            if celdasVivas.Existe(x,y+2)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x,y+2)==1:
+                                    rejilla.eliminar(x,y+2)
+                                    celdasVivas.eliminar(x,y+2)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x,y+2,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x,y+2,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x,y+2,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x),str(y+2)))
+                                
+                        if (celdasVivas.Existe(x,y-3)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y-3)):
+                            if celdasVivas.Existe(x,y-2)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x,y-2)==1:
+                                    rejilla.eliminar(x,y-2)
+                                    celdasVivas.eliminar(x,y-2)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x,y-2,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x,y-2,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x,y-2,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x),str(y-2)))
+
+                        
+                        if (celdasVivas.Existe(x+4,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x+4,y)):
+                            if celdasVivas.Existe(x+3,y)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x+3,y)==1:
+                                    rejilla.eliminar(x+3,y)
+                                    celdasVivas.eliminar(x+3,y)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x+3,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x+3,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x+3,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x+3),str(y)))
+                        
+                        if (celdasVivas.Existe(x-4,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-4,y)):
+                            if celdasVivas.Existe(x-3,y)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x-3,y)==1:
+                                    rejilla.eliminar(x-3,y)
+                                    celdasVivas.eliminar(x-3,y)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x-3,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x-3,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x-3,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x-3),str(y)))
+                                
+                        if (celdasVivas.Existe(x,y+4)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y+4)):
+                            if celdasVivas.Existe(x,y+3)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x,y+3)==1:
+                                    rejilla.eliminar(x,y+3)
+                                    celdasVivas.eliminar(x,y+3)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x,y+3,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x,y+3,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x,y+3,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x),str(y+3)))
+                                
+                        if (celdasVivas.Existe(x,y-4)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y-4)):
+                            if celdasVivas.Existe(x,y-3)==1:
+                                comidas=comidas+1
+                                if rejilla.Existe(x,y-3)==1:
+                                    rejilla.eliminar(x,y-3)
+                                    celdasVivas.eliminar(x,y-3)
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                nuevaCelda=NodoD(codigoOrganismo,x,y-3,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                
+                                nuevoVivo=NodoS2(x,y-3,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                
+                                n1 = NodoCeldas(x,y-3,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({},{})'.format(str(x),str(y-3)))
+
                         
                         if (celdasVivas.Existe(x+2,y+2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x+2,y+2)):
-                            if celdasVivas.Exixte(x+1,y+1)==1:
+                            if celdasVivas.Existe(x+1,y+1)==1:
+                                comidas=comidas+1
                                 if rejilla.Existe(x+1,y+1)==1:
                                     rejilla.eliminar(x+1,y+1)
+                                    celdasVivas.eliminar(x+1,y+1)
                                 color=celdasVivas.color(x,y)
                                 codigoOrganismo=celdasVivas.organismo(x,y)
                                 nuevaCelda=NodoD(codigoOrganismo,x+1,y+1,1,color)
                                 rejilla.agregar(nuevaCelda)
-                                ocupadas=ocupadas+1
+                                
+                                nuevoVivo=NodoS2(x+1,y+1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
                                 
                                 n1 = NodoCeldas(x+1,y+1,color,codigoOrganismo)
                                 matrizA.insertar(n1)
-                                print("se la comen :(")
+                                print('COMIDA: ({},{})'.format(str(x+1),str(y+1)))
                             
                         if (celdasVivas.Existe(x-2,y-2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-2,y-2)):
-                            if celdasVivas.Exixte(x-1,y-1)==1:
+                            if celdasVivas.Existe(x-1,y-1)==1:
+                                comidas=comidas+1
                                 if rejilla.Existe(x-1,y-1)==1:
                                     rejilla.eliminar(x-1,y-1)
+                                    celdasVivas.eliminar(x-1,y-1)
                                 color=celdasVivas.color(x,y)
                                 codigoOrganismo=celdasVivas.organismo(x,y)
                                 nuevaCelda=NodoD(codigoOrganismo,x-1,y-1,1,color)
                                 rejilla.agregar(nuevaCelda)
-                                ocupadas=ocupadas+1
+                                
+                                nuevoVivo=NodoS2(x-1,y-1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
                                 
                                 n1 = NodoCeldas(x-1,y-1,color,codigoOrganismo)
                                 matrizA.insertar(n1)
-                                print("se la comen :(") 
+                                print('COMIDA: ({},{})'.format(str(x-1),str(y-1)))
                             
                         if (celdasVivas.Existe(x-2,y+2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-2,y+2)):
-                            if celdasVivas.Exixte(x-1,y+1)==1:
+                            if celdasVivas.Existe(x-1,y+1)==1:
+                                comidas=comidas+1
                                 if rejilla.Existe(x-1,y+1)==1:
                                     rejilla.eliminar(x-1,y+1)
+                                    celdasVivas.eliminar(x-1,y+1)
                                 color=celdasVivas.color(x,y)
                                 codigoOrganismo=celdasVivas.organismo(x,y)
                                 nuevaCelda=NodoD(codigoOrganismo,x-1,y+1,1,color)
                                 rejilla.agregar(nuevaCelda)
-                                ocupadas=ocupadas+1
+                                
+                                nuevoVivo=NodoS2(x-1,y+1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
                                 
                                 n1 = NodoCeldas(x-1,y+1,color,codigoOrganismo)
                                 matrizA.insertar(n1)
-                                print("se la comen :(") 
+                                print('COMIDA: ({},{})'.format(str(x-1),str(y+1))) 
                             
                         if (celdasVivas.Existe(x+2,y-2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x+2,y-2)):
-                            if celdasVivas.Exixte(x+1,y-1)==1:
+                            
+                            if celdasVivas.Existe(x+1,y-1)==1:
+                                comidas=comidas+1
                                 if rejilla.Existe(x+1,y-1)==1:
                                     rejilla.eliminar(x+1,y-1)
+                                    celdasVivas.eliminar(x+1,y-1)
                                 color=celdasVivas.color(x,y)
                                 codigoOrganismo=celdasVivas.organismo(x,y)
                                 nuevaCelda=NodoD(codigoOrganismo,x+1,y-1,1,color)
                                 rejilla.agregar(nuevaCelda)
-                                ocupadas=ocupadas+1
+                                
+                                nuevoVivo=NodoS2(x+1,y-1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
                                 
                                 n1 = NodoCeldas(x+1,y-1,color,codigoOrganismo)
                                 matrizA.insertar(n1)
-                                print("se la comen :(") 
+                                print('COMIDA: ({},{})'.format(str(x+1),str(y-1)))
+
+                        
+                        if (celdasVivas.Existe(x-2,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-2,y)) and (celdasVivas.Existe(x-1,y+1)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-1,y+1)) and (celdasVivas.Existe(x,y+2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y+2)):
+                            
+                            if celdasVivas.Existe(x-1,y)==1 and celdasVivas.Existe(x,y+1)==1:
+                                comidas=comidas+2
+                                if rejilla.Existe(x-1,y)==1:
+                                    rejilla.eliminar(x-1,y)
+                                    celdasVivas.eliminar(x-1,y)
+                                if rejilla.Existe(x,y+1)==1:
+                                    rejilla.eliminar(x,y+1)
+                                    celdasVivas.eliminar(x,y+1)
+                                    
+                                    
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                
+                                
+                                nuevaCelda=NodoD(codigoOrganismo,x-1,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                nuevoVivo=NodoS2(x-1,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                n1 = NodoCeldas(x-1,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({} , {})'.format(str(x-1),str(y)))
+                                
+                                
+                                nuevaCelda1=NodoD(codigoOrganismo,x,y+1,1,color)
+                                rejilla.agregar(nuevaCelda1)
+                                nuevoVivo=NodoS2(x,y+1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                n2 = NodoCeldas(x,y+1,color,codigoOrganismo)
+                                matrizA.insertar(n2)
+                                print('COMIDA: ({} , {})'.format(str(x),str(y+1)))
                         
                         
-                        
-                        
-                        
+                        if (celdasVivas.Existe(x-2,y)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x-2,y)) and (celdasVivas.Existe(x+1,y-1)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x+1,y-1)) and (celdasVivas.Existe(x,y-2)==1 and CeldasAnalizar.organismo(x,y)== celdasVivas.organismo(x,y-2)):
+                            
+                            if celdasVivas.Existe(x-1,y)==1 and celdasVivas.Existe(x,y-1)==1:
+                                comidas=comidas+2
+                                if rejilla.Existe(x-1,y)==1:
+                                    rejilla.eliminar(x-1,y)
+                                    celdasVivas.eliminar(x-1,y)
+                                if rejilla.Existe(x,y-1)==1:
+                                    rejilla.eliminar(x,y-1)
+                                    celdasVivas.eliminar(x,y-1)
+                                    
+                                color=celdasVivas.color(x,y)
+                                codigoOrganismo=celdasVivas.organismo(x,y)
+                                
+                                
+                                nuevaCelda=NodoD(codigoOrganismo,x-1,y,1,color)
+                                rejilla.agregar(nuevaCelda)
+                                nuevoVivo=NodoS2(x-1,y,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                n1 = NodoCeldas(x-1,y,color,codigoOrganismo)
+                                matrizA.insertar(n1)
+                                print('COMIDA: ({} , {})'.format(str(x-1),str(y)))
+                                
+                                
+                                nuevaCelda1=NodoD(codigoOrganismo,x,y-1,1,color)
+                                rejilla.agregar(nuevaCelda1)
+                                nuevoVivo=NodoS2(x,y-1,color,codigoOrganismo,muestra)
+                                celdasVivas.agregar(nuevoVivo)
+                                n2 = NodoCeldas(x,y-1,color,codigoOrganismo)
+                                matrizA.insertar(n2)
+                                print('COMIDA: ({} , {})'.format(str(x),str(y-1)))
+
                         CeldasAnalizar.eliminar(x,y)
-                        #CeldasAnalizar.print()
                     else:
                         print()
                         print('La celda ({},{}) NO SOBREVIVE'.format(x, y))
@@ -245,12 +536,10 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
                         libres=libres+1
                         n1 = NodoCeldas(x,y,"#FFFFFF","")
                         matrizA.insertar(n1)
-                        #print("aun no ha eliminado?")
+
                         celdasVivas.eliminar(x,y)
                         CeldasAnalizar.eliminar(x,y)
-                        #print("ya elimino?")
-                        #celdasVivas.print()
-                        #CeldasAnalizar.print()
+
                         
                 elif(rejilla.Existe(x,y)==0):
                     color=celdasVivas.color(x,y)
@@ -268,16 +557,12 @@ def simulacion(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,file
             else:
                 print("algo falló con celdas ocupadas :/")
     
-    
-    #rejilla.print()
     print()
     print("CELDAS LIBRES: "+ str(libres)+". CELDAS OCUPADAS: "+str(ocupadas)+". Total: "+str(libres+ocupadas))
+    print("COMIDAS: " + str(comidas))
     matrizA.graficarDot("Actual",muestra)
     
-    #Inicio(listaOrganismos,listaMuestras,2,filename1,celdasVivas,rejilla,muestra,matriz0,CeldasAnalizar)
     return rejilla
-
-
 
 
 
@@ -305,7 +590,6 @@ def cargarArchivo(filename1,muestra):
             filas=datoP1.find('filas').text
             columnas=datoP1.find('columnas').text
 
-            
             nuevaMuestra=NodoS22(codigo,descripcion,filas,columnas)
             muestras.agregar(nuevaMuestra)
             
@@ -357,7 +641,6 @@ def generarRejilla(celdasVivasL,muestra,muestrasL,listaOrganismos,listaMuestras,
     print("CELDAS LIBRES: "+ str(libres)+". CELDAS OCUPADAS: "+str(ocupadas)+". Total: "+str(libres+ocupadas))
     matriz0.graficarDot("Inicial",muestra)
     
-    
     return rejilla
 
 
@@ -388,6 +671,8 @@ def cargarVivas(filename, nombreM,listaOrganismos):
     return celdasVivas
 
 def salidaXML():
+    
+    
     print()
 
 

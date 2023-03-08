@@ -26,7 +26,7 @@ class ListaSimpleEnlazada:
         cadena = ''
         while True:
             if nodoAux.codigo is not None:
-                cadena += "("  + " "+ nodoAux.codigo + " " + nodoAux.nombre + " " + nodoAux.color+"v"+")"
+                cadena += "("  + " "+ nodoAux.codigo + " " + nodoAux.nombre + " " + nodoAux.color+" )"
 
                 if nodoAux.siguiente is not None:
                     nodoAux = nodoAux.siguiente
@@ -113,7 +113,7 @@ class ListaSimpleEnlazada22:
         cadena = ''
         while True:
             if nodoAux.codigo is not None:
-                cadena += "(" + nodoAux.codigo + " " + nodoAux.descripcion + nodoAux.filas + nodoAux.columnas + ")"
+                cadena += "(" + nodoAux.codigo + " " + nodoAux.descripcion +" "+ nodoAux.filas +" "+ nodoAux.columnas + " )"
 
                 if nodoAux.siguiente is not None:
                     nodoAux = nodoAux.siguiente
@@ -148,7 +148,7 @@ class ListaSimpleEnlazada22:
 
         nodoAux = self.primero
         contador=0
-        while nodoAux.codigo != codigo:
+        while str(nodoAux.codigo) != str(codigo):
             contador=contador+1
             if nodoAux.siguiente is not None:
                 

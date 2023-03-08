@@ -4,7 +4,7 @@ from NodoSimple2 import NodoS2
 class ListaSimpleEnlazada2:
     def __init__(self) -> None:
         self.primero = NodoS2()
-        self.ultimo = NodoS2()
+        #self.ultimo = NodoS2()
 
     
     '''def agregar(self, nuevoNodo):
@@ -30,10 +30,24 @@ class ListaSimpleEnlazada2:
             actual= actual.siguiente
         actual.siguiente= dato'''
         
+        
+        
+    '''def agregar(self, data):
+        new_node = data
+        
+        if self.primero is None:
+            self.primero = new_node
+            return
+
+        last_node = self.primero
+        while last_node.siguiente is not None:
+            last_node = last_node.siguiente
+
+        last_node.siguiente = new_node'''
     
 
     def agregar(self, dato):
-        if self.primero.codigoOrganismo is None:
+        if self.primero is None:
             self.primero = dato
             self.ultimo = dato
             
@@ -70,7 +84,7 @@ class ListaSimpleEnlazada2:
         actual=self.primero
 
         while actual != None:
-            print ('({}  {}  {}) -> '.format(actual.fila, actual.columna,actual.codigoOrganismo),end="")
+            print ('({}  {}  {} {} {} ) -> '.format(actual.fila, actual.columna,actual.codigoOrganismo, actual.color, actual.muestra),end="")
             actual = actual.siguiente
             
 
@@ -90,7 +104,7 @@ class ListaSimpleEnlazada2:
         if self.primero is None:
             return contador
         
-        if self.primero.fila == str(x) and self.primero.columna == str(y):
+        if str(self.primero.fila) == str(x) and self.primero.columna == str(y):
             contador =str(self.primero.codigoOrganismo)
             return contador
 
@@ -98,7 +112,7 @@ class ListaSimpleEnlazada2:
         curr_node = self.primero.siguiente
         while curr_node is not None:
             if curr_node.fila == str(x) and curr_node.columna == str(y):
-                contador =str(self.primero.codigoOrganismo)
+                contador =str(curr_node.codigoOrganismo)
 
                 return contador
             prev_node = curr_node
@@ -168,7 +182,7 @@ class ListaSimpleEnlazada2:
 
 
     def color(self, x,y):
-        contador=0
+        contador="hola"
         if self.primero is None:
             return contador
         
@@ -180,7 +194,7 @@ class ListaSimpleEnlazada2:
         curr_node = self.primero.siguiente
         while curr_node is not None:
             if curr_node.fila == str(x) and curr_node.columna == str(y):
-                contador =str(self.primero.color)
+                contador =str(curr_node.color)
 
                 return contador
             prev_node = curr_node
@@ -260,5 +274,4 @@ class ListaSimpleEnlazada2:
             prev_node = curr_node
             curr_node = curr_node.siguiente
 
-        
         return
